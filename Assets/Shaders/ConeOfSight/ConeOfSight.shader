@@ -3,7 +3,6 @@ Shader "ShaderPack/ConeOfSight" {
 	Properties {
 		_Color("Color",Color) = (1,1,1,1)
 		_SightAngle("SightAngle",Float) = 0.5
-		//_CurrentAngle("CurrentAngle",Range(0,360)) = 0
 		_FarHardness("FarHardness",Range(10,0)) = 5
 		_RangeHardness("RangeHardness",Range(0,100)) = 5
 		_RangeStep("RangeStep",Range(0,1)) = 0.7
@@ -30,13 +29,14 @@ Shader "ShaderPack/ConeOfSight" {
 
 			half4 _Color;
 			half _SightAngle;
-			//half _CurrentAngle;
+
 			half _FarHardness;
 			half _RangeHardness;
 			half _RangeStep;
 
-			uniform int _BufferSize = 256;
-			uniform float _SightDepthBuffer[100];
+			//uniform half _CurrentAngle = 0;
+			uniform int _BufferSize = 64;
+			uniform float _SightDepthBuffer[64];
 
 			//Vertex
 			v2f vert(appdata_base IN){
@@ -71,7 +71,7 @@ Shader "ShaderPack/ConeOfSight" {
 					float fragmentangle = asin(fragmentdir.y)+sightAngleRads;
 					float fragmentval = 1.0f-(fragmentangle)/(sightAngleRads*2);
 
-					int index = _BufferSize- fragmentval * _BufferSize;
+					int index =  fragmentval * _BufferSize;
 					if (_SightDepthBuffer[index]>0 && (1-distcenter)>_SightDepthBuffer[index]){
 						col *= 0.7f;
 						col.a *= 0.7f;

@@ -25,6 +25,7 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 		//if (m_Rotation != this.transform.rotation){
 			m_Rotation = this.transform.rotation;
 			UpdateViewDepthBuffer();
+			//m_ConeOfSightMat.SetFloat("_CurrentAngle", -this.transform.eulerAngles.y);
 		//}
 	}
 
@@ -43,23 +44,29 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 
 	void UpdateViewDepthBuffer(){
 		
-		float anglestep = (SightAngle / DepthBufferSize) * Mathf.PI / 180;
-		float viewangle = m_Rotation.eulerAngles.y * Mathf.PI / 180;
+		float anglestep = SightAngle / DepthBufferSize;
+		float viewangle = m_Rotation.eulerAngles.y;
+		int bufferindex= 0;
+
 		for(int i = 0; i < DepthBufferSize; i++){
-			float angle = anglestep*(i-DepthBufferSize/2) - viewangle;
-			Vector3 dest = GetVector(angle, MaxDistance);
+			float angle = anglestep * i + (viewangle-SightAngle/2);
+
+
+			Vector3 dest = GetVector(-angle * Mathf.PI / 180, MaxDistance);
 			Ray r = new Ray(this.transform.position, dest);
 		
 			RaycastHit hit = new RaycastHit();
 			if(Physics.Raycast(r,out hit)){
-				m_aDepthBuffer[i] = (hit.distance/MaxDistance);
+				m_aDepthBuffer[bufferindex] = (hit.distance/MaxDistance) + 0.005f;
 				//if (DrawDebug)
 					//Debug.DrawRay(this.transform.position, hit.point,Color.red);
 			}else{
-				m_aDepthBuffer[i] = -1;
+				m_aDepthBuffer[bufferindex] = -1;
 				if (DrawDebug)
 					Debug.DrawRay(this.transform.position, dest);
 			}
+			bufferindex++;
+			
 		}
 		m_ConeOfSightMat.SetFloatArray("_SightDepthBuffer",m_aDepthBuffer);
 	}
