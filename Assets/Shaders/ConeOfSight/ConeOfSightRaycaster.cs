@@ -30,7 +30,7 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 	}
 
 	void OnDrawGizmos(){
-		Handles.DrawWireArc(this.transform.position,Vector3.up,this.transform.position,360,MaxDistance);
+		Handles.DrawWireArc(this.transform.localPosition,this.transform.up,Vector3.right,360,MaxDistance);
 
 		float halfangle = SightAngle/2 * Mathf.PI / 180;
 		float viewangle = this.transform.rotation.eulerAngles.y * Mathf.PI / 180;
@@ -40,6 +40,7 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 
 		Debug.DrawRay(this.transform.position, p1);
 		Debug.DrawRay(this.transform.position, p2);
+
 	}
 
 	void UpdateViewDepthBuffer(){
@@ -74,7 +75,7 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 	Vector3 GetVector(float angle, float dist){
 		float x = Mathf.Cos(angle)*dist;
 		float z = Mathf.Sin(angle)*dist;
-		return new Vector3(x, this.transform.position.y,z);
+		return new Vector3(x, 0,z);
 	}
 
 }
