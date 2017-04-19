@@ -5,19 +5,27 @@ using System.Collections;
 public class ConeOfSightRaycaster : MonoBehaviour {
 
 	public GameObject ConeOfSight;
-	public int DepthBufferSize;
 	public float SightAngle;
 	public float MaxDistance;
 	public bool DrawDebug;
 
+	private const int BUFFER_SIZE = 256;
 	private Quaternion m_Rotation;
 	private float[] m_aDepthBuffer;
 	private Material m_ConeOfSightMat;
 
 	void Start () {
-		m_ConeOfSightMat = ConeOfSight.GetComponent<Renderer>().sharedMaterial;
-		m_aDepthBuffer = new float[DepthBufferSize];
-		m_ConeOfSightMat.SetInt("_BufferSize", DepthBufferSize);
+		CopyMaterial();
+
+
+		m_aDepthBuffer = new float[BUFFER_SIZE];
+	}
+
+	void CopyMaterial(){
+		Renderer r = ConeOfSight.GetComponent<Renderer>();
+		Material mat = r.sharedMaterial;
+		m_ConeOfSightMat = new Material(mat);
+		r.material = m_ConeOfSightMat;
 	}
 	
 
@@ -45,11 +53,11 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 
 	void UpdateViewDepthBuffer(){
 		
-		float anglestep = SightAngle / DepthBufferSize;
+		float anglestep = SightAngle / BUFFER_SIZE;
 		float viewangle = m_Rotation.eulerAngles.y;
 		int bufferindex= 0;
 
-		for(int i = 0; i < DepthBufferSize; i++){
+		for(int i = 0; i < BUFFER_SIZE; i++){
 			float angle = anglestep * i + (viewangle-SightAngle/2);
 
 
@@ -58,7 +66,7 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 		
 			RaycastHit hit = new RaycastHit();
 			if(Physics.Raycast(r,out hit)){
-				m_aDepthBuffer[bufferindex] = (hit.distance/MaxDistance) + 0.005f;
+				m_aDepthBuffer[bufferindex] = (hit.distance/MaxDistance);
 				//if (DrawDebug)
 					//Debug.DrawRay(this.transform.position, hit.point,Color.red);
 			}else{
