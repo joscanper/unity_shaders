@@ -11,4 +11,4 @@ This repository contains a set of shaders that I have created trying to achieve 
 ![Rainy Window Shader](https://raw.githubusercontent.com/joscanper/unity_shaders/master/Assets/Shaders/RainyGlass/RainyGlass.gif)
 
 ## Hologram
-![Hologram](https://raw.githubusercontent.com/joscanper/unity_shaders/master/Assets/Shaders/RainyGlass/RainyGlass.gif)
+![Hologram](https://github.com/joscanper/unity_shaders/blob/master/Assets/Shaders/Hologram/Hologram.gif)
