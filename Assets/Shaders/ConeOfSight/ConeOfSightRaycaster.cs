@@ -15,19 +15,11 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 	private Material m_ConeOfSightMat;
 
 	void Start () {
-		CopyMaterial();
-
+		Renderer r = ConeOfSight.GetComponent<Renderer>();
+		m_ConeOfSightMat = r.material;
 
 		m_aDepthBuffer = new float[BUFFER_SIZE];
 	}
-
-	void CopyMaterial(){
-		Renderer r = ConeOfSight.GetComponent<Renderer>();
-		Material mat = r.sharedMaterial;
-		m_ConeOfSightMat = new Material(mat);
-		r.material = m_ConeOfSightMat;
-	}
-	
 
 	void FixedUpdate () {
 		//if (m_Rotation != this.transform.rotation){
@@ -77,6 +69,7 @@ public class ConeOfSightRaycaster : MonoBehaviour {
 			bufferindex++;
 			
 		}
+
 		m_ConeOfSightMat.SetFloatArray("_SightDepthBuffer",m_aDepthBuffer);
 	}
 
