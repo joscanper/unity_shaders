@@ -2,7 +2,10 @@
 
 This repository contains a set of shaders that I have created trying to achieve cool effects for my games or as an attempt to replicate interesting effects that I have seen in other games.
 
-## Cone of Sight (Commandos/Desperados)
+## Pitch grass
+![Pitch Grass](https://raw.githubusercontent.com/joscanper/unity_shaders/master/Assets/Shaders/Grass/Preview.PNG)
+
+## Cone of Sight
 ![Cone of Sight Shader](https://raw.githubusercontent.com/joscanper/unity_shaders/master/Assets/Shaders/ConeOfSight/ConeOfSight.gif)
 
 [More information about the shader](https://github.com/joscanper/unity_shaders/tree/master/Assets/Shaders/ConeOfSight)
