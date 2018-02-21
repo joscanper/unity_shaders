@@ -1,4 +1,6 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 Shader "ShaderPack/Hologram" {
 	Properties {
@@ -43,7 +45,7 @@ Shader "ShaderPack/Hologram" {
 			v2f vert(appdata_base IN){
 				v2f o;
 				o.worldPos = mul(unity_ObjectToWorld, IN.vertex).xyz;
-				o.position = mul(UNITY_MATRIX_MVP, IN.vertex);
+				o.position = UnityObjectToClipPos(IN.vertex);
 				o.normal = UnityObjectToWorldNormal(IN.normal);
 				o.viewDir = normalize(_WorldSpaceCameraPos.xyz - mul(unity_ObjectToWorld, IN.vertex).xyz);
 				o.uv = IN.texcoord;

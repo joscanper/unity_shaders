@@ -1,4 +1,6 @@
-﻿
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+
 Shader "ShaderPack/Test" {
 	Properties {
 		_Opacity ("Opacity", Range(0.1,1)) = 0.5
@@ -36,7 +38,7 @@ Shader "ShaderPack/Test" {
 			//Vertex
 			v2f vert(appdata_base IN){
 				v2f OUT;
-				OUT.position = mul(UNITY_MATRIX_MVP, IN.vertex);
+				OUT.position = UnityObjectToClipPos(IN.vertex);
 				OUT.uv = IN.texcoord;
 				OUT.uvgrab = ComputeGrabScreenPos(OUT.position);
 

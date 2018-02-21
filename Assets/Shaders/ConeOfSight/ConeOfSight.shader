@@ -1,4 +1,6 @@
-﻿
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+
 Shader "ShaderPack/ConeOfSight" {
 	Properties {
 		_Color("Color",Color) = (1,1,1,1)
@@ -46,7 +48,7 @@ Shader "ShaderPack/ConeOfSight" {
 			//Vertex
 			v2f vert(appdata_base IN){
 				v2f o;
-				o.position = mul(UNITY_MATRIX_MVP, IN.vertex);
+				o.position = UnityObjectToClipPos(IN.vertex);
 				o.uv = IN.texcoord;
 				return o;
 			}
